@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$FOOD Token - Get Food for Cheap</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #ffffff;
+            background: #000000;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(6, 220, 47, 0.2);
+        }
+
+        nav.scrolled {
+            background: rgba(0, 0, 0, 0.98);
+            border-bottom: 1px solid rgba(6, 220, 47, 0.4);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #06DC2F, #00E838);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #06DC2F;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem 0;
+            position: relative;
+            background: radial-gradient(ellipse at center, rgba(6, 220, 47, 0.1) 0%, rgba(0, 0, 0, 1) 70%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            z-index: 2;
+            position: relative;
+        }
+
+        .hero-logo {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(45deg, #06DC2F, #00E838);
+            border-radius: 50%;
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            animation: float 3s ease-in-out infinite;
+            box-shadow: 0 20px 40px rgba(6, 220, 47, 0.3);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .hero-logo img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ffffff, #06DC2F);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slideInUp 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: slideInUp 1s ease-out 0.2s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #06DC2F, #00E838);
+            color: #000;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            animation: slideInUp 1s ease-out 0.4s both;
+            box-shadow: 0 10px 30px rgba(6, 220, 47, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(6, 220, 47, 0.5);
+            background: linear-gradient(45deg, #00E838, #06DC2F);
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* How It Works Section */
+        .how-it-works {
+            padding: 6rem 0;
+            background: rgba(6, 220, 47, 0.02);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, #ffffff, #06DC2F);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .step-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(6, 220, 47, 0.2);
+        }
+
+        .step-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(6, 220, 47, 0.2);
+            border: 1px solid rgba(6, 220, 47, 0.4);
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #06DC2F, #00E838);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #000;
+        }
+
+        .step-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #06DC2F;
+        }
+
+        /* Benefits Section */
+        .benefits {
+            padding: 6rem 0;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .benefit-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(6, 220, 47, 0.2);
+        }
+
+        .benefit-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(6, 220, 47, 0.2);
+            border: 1px solid rgba(6, 220, 47, 0.4);
+        }
+
+        .benefit-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .benefit-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #06DC2F;
+        }
+
+        /* Token Stats */
+        .token-stats {
+            padding: 6rem 0;
+            background: rgba(6, 220, 47, 0.02);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(6, 220, 47, 0.2);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #06DC2F;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: 6rem 0;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-answer.active {
+            padding: 1.5rem;
+            max-height: 200px;
+        }
+
+        .faq-toggle {
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-toggle.active {
+            transform: rotate(45deg);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(6, 220, 47, 0.05);
+            padding: 3rem 0;
+            text-align: center;
+            border-top: 1px solid rgba(6, 220, 47, 0.2);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(6, 220, 47, 0.2);
+        }
+
+        .social-links a:hover {
+            background: linear-gradient(45deg, #06DC2F, #00E838);
+            transform: translateY(-3px);
+            color: #000;
+        }
+
+        .contract-address {
+            font-family: monospace;
+            font-size: 0.9rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            word-break: break-all;
+            border: 1px solid rgba(6, 220, 47, 0.2);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">$FOOD</div>
+                <ul class="nav-links">
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#benefits">Benefits</a></li>
+                    <li><a href="#stats">Stats</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-logo">
+                    <img src="ubercoin1.png" alt="$FOOD Token Logo" />
+                </div>
+                <h1>Get Food for Cheap. Powered by $FOOD</h1>
+                <p>Hold $FOOD tokens and unlock exclusive discounts on Uber Eats through our private Discord community</p>
+                <a href="#" class="cta-button" onclick="connectWallet()">Verify Token → Join Discord</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <h2 class="section-title fade-in">How It Works</h2>
+            <div class="steps-grid">
+                <div class="step-card fade-in">
+                    <div class="step-number">1</div>
+                    <h3>Buy $FOOD</h3>
+                    <p>Purchase $FOOD tokens on your favorite DEX. Minimum holding requirements apply for Discord access.</p>
+                </div>
+                <div class="step-card fade-in">
+                    <div class="step-number">2</div>
+                    <h3>Verify Ownership</h3>
+                    <p>Connect your wallet to verify you hold the required amount of $FOOD tokens.</p>
+                </div>
+                <div class="step-card fade-in">
+                    <div class="step-number">3</div>
+                    <h3>Join Discord</h3>
+                    <p>Get instant access to our exclusive Discord channel with verified token holders.</p>
+                </div>
+                <div class="step-card fade-in">
+                    <div class="step-number">4</div>
+                    <h3>Order & Save</h3>
+                    <p>Enjoy heavily discounted Uber Eats orders and exclusive food deals daily!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="benefits" class="benefits">
+        <div class="container">
+            <h2 class="section-title fade-in">Token Holder Benefits</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card fade-in">
+                    <div class="benefit-icon">🍕</div>
+                    <h3>Discounted Uber Eats</h3>
+                    <p>Get up to 50% off your Uber Eats orders through our exclusive partnership deals.</p>
+                </div>
+                <div class="benefit-card fade-in">
+                    <div class="benefit-icon">🎁</div>
+                    <h3>Exclusive Food Drops</h3>
+                    <p>First access to limited-time offers from top restaurants in your area.</p>
+                </div>
+                <div class="benefit-card fade-in">
+                    <div class="benefit-icon">🎰</div>
+                    <h3>Token Holder Raffles</h3>
+                    <p>Weekly raffles for free meals, restaurant gift cards, and exclusive experiences.</p>
+                </div>
+                <div class="benefit-card fade-in">
+                    <div class="benefit-icon">👥</div>
+                    <h3>VIP Community</h3>
+                    <p>Connect with fellow food lovers and share the best deals in our private Discord.</p>
+                </div>
+                <div class="benefit-card fade-in">
+                    <div class="benefit-icon">⚡</div>
+                    <h3>Instant Notifications</h3>
+                    <p>Real-time alerts for flash sales and limited-time discount codes.</p>
+                </div>
+                <div class="benefit-card fade-in">
+                    <div class="benefit-icon">🚀</div>
+                    <h3>Growing Utility</h3>
+                    <p>More partnerships and benefits added regularly as our community grows.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Token Stats Section -->
+    <section id="stats" class="token-stats">
+        <div class="container">
+            <h2 class="section-title fade-in">$FOOD Token Stats</h2>
+            <div class="stats-grid">
+                <div class="stat-card fade-in">
+                    <div class="stat-number">$2.4M</div>
+                    <div class="stat-label">Market Cap</div>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-number">1B</div>
+                    <div class="stat-label">Total Supply</div>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-number">12,847</div>
+                    <div class="stat-label">Holders</div>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-number">$0.0024</div>
+                    <div class="stat-label">Price</div>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-number">87%</div>
+                    <div class="stat-label">Tokens Burned</div>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Discord Active</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <h2 class="section-title fade-in">Frequently Asked Questions</h2>
+            <div class="faq-container">
+                <div class="faq-item fade-in">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>How do I verify I hold $FOOD tokens?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Simply connect your wallet using our verification button. We'll automatically check your token balance and grant Discord access if you meet the minimum holding requirement.</p>
+                    </div>
+                </div>
+                <div class="faq-item fade-in">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>What's the minimum $FOOD holding requirement?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>You need to hold at least 10,000 $FOOD tokens to access the Discord channel and receive food discounts.</p>
+                    </div>
+                </div>
+                <div class="faq-item fade-in">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Can I invite friends to the Discord?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Only verified $FOOD holders can access the Discord. Friends must purchase and hold the required tokens to join.</p>
+                    </div>
+                </div>
+                <div class="faq-item fade-in">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>How often are new deals posted?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>New deals are posted daily! We have partnerships with multiple restaurants and regularly negotiate exclusive discounts for our community.</p>
+                    </div>
+                </div>
+                <div class="faq-item fade-in">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Is this available in my city?</span>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our discounts work in any city where Uber Eats operates. We're constantly expanding our restaurant partnerships globally.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="social-links">
+                    <a href="#" title="Discord">💬</a>
+                    <a href="#" title="Twitter">🐦</a>
+                    <a href="#" title="Telegram">✈️</a>
+                </div>
+                <div class="contract-address">
+                    Contract: 0x742d35Cc6634C0532925a3b8D404d0bf0e5f8a9C
+                </div>
+            </div>
+            <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);">
+                <p>&copy; 2025 $FOOD Token. All rights reserved. | Not financial advice.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // FAQ Toggle functionality
+        function toggleFAQ(element) {
+            const answer = element.nextElementSibling;
+            const toggle = element.querySelector('.faq-toggle');
+            
+            // Close all other FAQ items
+            document.querySelectorAll('.faq-answer').forEach(faq => {
+                if (faq !== answer) {
+                    faq.classList.remove('active');
+                    faq.previousElementSibling.querySelector('.faq-toggle').classList.remove('active');
+                }
+            });
+            
+            // Toggle current FAQ item
+            answer.classList.toggle('active');
+            toggle.classList.toggle('active');
+        }
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Wallet connection placeholder
+        function connectWallet() {
+            alert('🚀 Wallet connection coming soon! This would verify your $FOOD token holdings and grant Discord access.');
+        }
+
+        // Add some interactive hover effects
+        document.querySelectorAll('.step-card, .benefit-card, .stat-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Add floating animation to hero logo
+        const heroLogo = document.querySelector('.hero-logo');
+        let floatDirection = 1;
+        
+        setInterval(() => {
+            const currentTransform = heroLogo.style.transform || 'translateY(0px)';
+            const currentY = parseInt(currentTransform.match(/-?\d+/) || 0);
+            
+            if (currentY >= 20) floatDirection = -1;
+            if (currentY <= -20) floatDirection = 1;
+            
+            heroLogo.style.transform = `translateY(${currentY + (floatDirection * 2)}px)`;
+        }, 100);
+
+        // Add particle effect on scroll
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.hero');
+            const speed = scrolled * 0.5;
+            
+            if (parallax) {
+                parallax.style.transform = `translateY(${speed}px)`;
+            }
+        });
+    </script>
+</body>
+</html>
