@@ -25,55 +25,150 @@
             padding: 0 20px;
         }
 
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(20px);
-            z-index: 1000;
-            padding: 1rem 0;
-            transition: all 0.3s ease;
-            border-bottom: 1px solid rgba(6, 220, 47, 0.2);
+        /* Top Bar */
+        .top-bar {
+            background: #000000;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(6, 220, 47, 0.1);
+            font-size: 0.875rem;
         }
 
-        nav.scrolled {
-            background: rgba(0, 0, 0, 0.98);
-            border-bottom: 1px solid rgba(6, 220, 47, 0.4);
-        }
-
-        .nav-content {
+        .top-bar-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
+        .top-bar-left {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 400;
+        }
+
+        .top-bar-right {
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 400;
+        }
+
+        /* Main Navigation */
+        nav {
+            position: fixed;
+            top: 49px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        nav.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            top: 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
         .logo {
-            font-size: 1.8rem;
-            font-weight: 800;
-            background: linear-gradient(45deg, #06DC2F, #00E838);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #000;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            background: #000;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #000;
+        }
+
+        .nav-center {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
         }
 
         .nav-links {
             display: flex;
             gap: 2rem;
             list-style: none;
+            margin: 0;
+            padding: 0;
         }
 
         .nav-links a {
-            color: #ffffff;
+            color: #6b7280;
             text-decoration: none;
             font-weight: 500;
-            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
         }
 
         .nav-links a:hover {
             color: #06DC2F;
-            transform: translateY(-2px);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .follow-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: transparent;
+            border: 1px solid #e5e7eb;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            color: #6b7280;
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .follow-btn:hover {
+            border-color: #06DC2F;
+            color: #06DC2F;
+        }
+
+        .follow-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .get-started-btn {
+            background: #000;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .get-started-btn:hover {
+            background: #06DC2F;
+            color: #000;
         }
 
         /* Hero Section */
@@ -84,6 +179,7 @@
             justify-content: center;
             text-align: center;
             padding: 2rem 0;
+            padding-top: 160px;
             position: relative;
             background: radial-gradient(ellipse at center, rgba(6, 220, 47, 0.1) 0%, rgba(0, 0, 0, 1) 70%);
         }
@@ -168,6 +264,44 @@
             transform: translateY(-3px);
             box-shadow: 0 15px 40px rgba(6, 220, 47, 0.5);
             background: linear-gradient(45deg, #00E838, #06DC2F);
+        }
+
+        /* Fixed CTA Button */
+        .cta-button-fixed {
+            position: fixed;
+            top: 50%;
+            right: 2rem;
+            transform: translateY(-50%);
+            z-index: 999;
+            display: none;
+            background: linear-gradient(45deg, #06DC2F, #00E838);
+            color: #000;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(6, 220, 47, 0.4);
+            writing-mode: vertical-lr;
+            text-orientation: mixed;
+        }
+
+        .cta-button-fixed:hover {
+            transform: translateY(-50%) scale(1.05);
+            box-shadow: 0 15px 40px rgba(6, 220, 47, 0.6);
+        }
+
+        .cta-button-fixed.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .cta-button-fixed {
+                right: 1rem;
+                padding: 0.8rem 1rem;
+                font-size: 0.9rem;
+            }
         }
 
         @keyframes slideInUp {
@@ -271,6 +405,17 @@
         .benefit-icon {
             font-size: 3rem;
             margin-bottom: 1rem;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .benefit-icon img {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
         }
 
         .benefit-card h3 {
@@ -421,8 +566,40 @@
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            .nav-links {
+            .nav-center {
                 display: none;
+            }
+
+            .nav-actions {
+                gap: 0.5rem;
+            }
+
+            .follow-btn, .get-started-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+
+            .top-bar {
+                padding: 0.5rem 0;
+                font-size: 0.8rem;
+            }
+
+            .top-bar-content {
+                flex-direction: column;
+                gap: 0.25rem;
+                text-align: center;
+            }
+
+            nav {
+                top: 60px;
+            }
+
+            nav.scrolled {
+                top: 0;
+            }
+
+            .hero {
+                padding-top: 140px;
             }
 
             .hero h1 {
@@ -431,11 +608,6 @@
 
             .section-title {
                 font-size: 2rem;
-            }
-
-            .footer-content {
-                flex-direction: column;
-                text-align: center;
             }
         }
 
@@ -453,18 +625,51 @@
     </style>
 </head>
 <body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="top-bar-content">
+                <div class="top-bar-left">
+                    <span>Developed for</span>
+                    <span>🍔 Food Lovers</span>
+                </div>
+                <div class="top-bar-right">
+                    <span>Believe</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fixed CTA Button -->
+    <a href="#" class="cta-button-fixed" id="fixedCTA" onclick="connectWallet()">Verify Token → Join Discord</a>
+
     <!-- Navigation -->
     <nav id="navbar">
         <div class="container">
             <div class="nav-content">
-                <div class="logo">$FOOD</div>
-                <ul class="nav-links">
-                    <li><a href="#hero">Home</a></li>
-                    <li><a href="#how-it-works">How It Works</a></li>
-                    <li><a href="#benefits">Benefits</a></li>
-                    <li><a href="#stats">Stats</a></li>
-                    <li><a href="#faq">FAQ</a></li>
-                </ul>
+                <a href="#" class="logo">
+                    <div class="logo-icon">⚡</div>
+                    <span class="logo-text">$FOOD</span>
+                </a>
+                
+                <div class="nav-center">
+                    <ul class="nav-links">
+                        <li><a href="#benefits">Benefits</a></li>
+                        <li><a href="#how-it-works">How It Works</a></li>
+                        <li><a href="#stats">Stats</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="nav-actions">
+                    <a href="#" class="follow-btn">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                        <span>Follow</span>
+                    </a>
+                    <a href="#" class="get-started-btn" onclick="connectWallet()">Get Started</a>
+                </div>
             </div>
         </div>
     </nav>
@@ -518,32 +723,26 @@
             <h2 class="section-title fade-in">Token Holder Benefits</h2>
             <div class="benefits-grid">
                 <div class="benefit-card fade-in">
-                    <div class="benefit-icon">🍕</div>
                     <h3>Discounted Uber Eats</h3>
                     <p>Get up to 50% off your Uber Eats orders through our exclusive partnership deals.</p>
                 </div>
                 <div class="benefit-card fade-in">
-                    <div class="benefit-icon">🎁</div>
                     <h3>Exclusive Food Drops</h3>
                     <p>First access to limited-time offers from top restaurants in your area.</p>
                 </div>
                 <div class="benefit-card fade-in">
-                    <div class="benefit-icon">🎰</div>
                     <h3>Token Holder Raffles</h3>
                     <p>Weekly raffles for free meals, restaurant gift cards, and exclusive experiences.</p>
                 </div>
                 <div class="benefit-card fade-in">
-                    <div class="benefit-icon">👥</div>
                     <h3>VIP Community</h3>
                     <p>Connect with fellow food lovers and share the best deals in our private Discord.</p>
                 </div>
                 <div class="benefit-card fade-in">
-                    <div class="benefit-icon">⚡</div>
                     <h3>Instant Notifications</h3>
                     <p>Real-time alerts for flash sales and limited-time discount codes.</p>
                 </div>
                 <div class="benefit-card fade-in">
-                    <div class="benefit-icon">🚀</div>
                     <h3>Growing Utility</h3>
                     <p>More partnerships and benefits added regularly as our community grows.</p>
                 </div>
@@ -638,33 +837,25 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="social-links">
-                    <a href="#" title="Discord">💬</a>
-                    <a href="#" title="Twitter">🐦</a>
-                    <a href="#" title="Telegram">✈️</a>
-                </div>
-                <div class="contract-address">
-                    Contract: 0x742d35Cc6634C0532925a3b8D404d0bf0e5f8a9C
-                </div>
-            </div>
-            <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);">
-                <p>&copy; 2025 $FOOD Token. All rights reserved. | Not financial advice.</p>
-            </div>
-        </div>
-    </footer>
-
     <script>
-        // Navbar scroll effect
+        // Navbar scroll effect and fixed CTA button
         window.addEventListener('scroll', function() {
             const navbar = document.getElementById('navbar');
+            const fixedCTA = document.getElementById('fixedCTA');
+            const heroSection = document.getElementById('hero');
+            const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
+            
             if (window.scrollY > 100) {
                 navbar.classList.add('scrolled');
             } else {
                 navbar.classList.remove('scrolled');
+            }
+            
+            // Show fixed CTA button when scrolled past hero section
+            if (window.scrollY > heroBottom - 200) {
+                fixedCTA.classList.add('show');
+            } else {
+                fixedCTA.classList.remove('show');
             }
         });
 
